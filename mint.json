@@ -54,10 +54,8 @@
       "pages": [
         "introduction",
         "quickstart",
-        "development"
-      ]
-    },
-        {
+        "development",
+                {
       "group": "링크형 설치하기",
       "pages": [
         "introduction",
@@ -66,13 +64,16 @@
       ]
     },
         {
-      "group": "통합형 설치;하기",
+      "group": "통합형 설치하기",
       "pages": [
         "introduction",
         "quickstart",
         "development"
       ]
     }
+      ]
+    },
+
     {
       "group": "Essentials",
       "pages": [
