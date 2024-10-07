@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "글로벌 오더 통합형 SDK",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -33,9 +33,9 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "name": "API 레퍼런스",
+      "icon": "rectangle-terminal",
+      "url": "api-reference"
     },
     {
       "name": "Community",
@@ -71,7 +71,22 @@
     }
       ]
     },
-
+    {
+      "group": "시작하기",
+      "pages": ["introduction", "quickstart"]
+    },
+    {
+      "group": "가이드",
+      "pages": ["usage"]
+    },
+    {
+      "group": "API 레퍼런스",
+      "pages": ["api-reference"]
+    },
+    {
+      "group": "지원",
+      "pages": ["troubleshooting"]
+    },
     {
       "group": "Essentials",
       "pages": [
