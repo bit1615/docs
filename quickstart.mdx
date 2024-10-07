@@ -1,86 +1,53 @@
 ---
-title: 'Quickstart'
-description: 'Start building awesome documentation in under 5 minutes'
+title: '빠른 시작 가이드'
+description: '5분 만에 글로벌 오더 통합형 SDK를 설치하고 실행해보세요'
 ---
 
-## Setup your development
+## 전제 조건
 
-Learn how to update your docs locally and deploy them to the public.
+<Check>웹 서버 또는 정적 웹 호스팅 서비스</Check>
+<Check>기본적인 HTML, JavaScript 지식</Check>
 
-### Edit and preview
+## 설치 단계
 
-<AccordionGroup>
-  <Accordion icon="github" title="Clone your docs locally">
-    During the onboarding process, we created a repository on your Github with
-    your docs content. You can find this repository on our
-    [dashboard](https://dashboard.mintlify.com). To clone the repository
-    locally, follow these
-    [instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-    in your terminal.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Preview changes">
-    Previewing helps you make sure your changes look as intended. We built a
-    command line interface to render these changes locally. 1. Install the
-    [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the
-    documentation changes locally with this command: ``` npm i -g mintlify ```
-    2. Run the following command at the root of your documentation (where
-    `mint.json` is): ``` mintlify dev ```
-  </Accordion>
-</AccordionGroup>
+<Steps>
+  <Step title="판매자 등록 (선택사항)">
+    백엔드 시스템에 판매자 등록을 요청합니다. 이 단계는 선택사항이지만, 등록 시 제공되는 `sellerId`를 사용하면 체크아웃 페이지에 판매자의 로고와 약관 동의 사항이 표시됩니다.
+  </Step>
+  <Step title="SDK 스크립트 추가">
+    HTML 파일의 `<head>` 또는 `<body>` 태그 내에 다음 스크립트를 추가합니다:
 
-### Deploy your changes
+    ```html
+    <script src="https://sdk-checkout-staging.delivered.co.kr/index.js"></script>
+    ```
+  </Step>
+  <Step title="SDK 사용">
+    JavaScript 코드에서 `dkLibrary.order()` 함수를 호출하여 글로벌 오더 프로세스를 시작합니다:
 
-<AccordionGroup>
+    ```javascript
+    const cartProducts = [
+      {
+        productRequest: {
+          title: "샘플 상품",
+          price: 10000,
+          originUrl: "https://example.com/product",
+          images: ["https://example.com/image.jpg"],
+          options: [{ title: "", price: 0 }]
+        },
+        selectedOptions: [{ title: "", quantity: 1 }]
+      }
+    ];
 
-<Accordion icon="message-bot" title="Install our Github app">
-  Our Github app automatically deploys your changes to your docs site, so you
-  don't need to manage deployments yourself. You can find the link to install on
-  your [dashboard](https://dashboard.mintlify.com). Once the bot has been
-  successfully installed, there should be a check mark next to the commit hash
-  of the repo.
-</Accordion>
-<Accordion icon="rocket" title="Push your changes">
-  [Commit and push your changes to
-  Git](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository#about-git-push)
-  for your changes to update in your docs site. If you push and don't see that
-  the Github app successfully deployed your changes, you can also manually
-  update your docs through our [dashboard](https://dashboard.mintlify.com).
-</Accordion>
+    dkLibrary.order(cartProducts);
+    ```
+  </Step>
+  <Step title="테스트 실행">
+    웹 페이지를 열고 콘솔에 오류가 없는지 확인합니다. 
+    결제 버튼을 클릭하여 글로벌 오더 프로세스가 시작되는지 테스트합니다.
+  </Step>
+</Steps>
 
-</AccordionGroup>
+## 다음 단계
 
-## Update your docs
-
-Add content directly in your files with MDX syntax and React components. You can use any of our components, or even build your own.
-
-<CardGroup>
-
-<Card title="Style Your Docs" icon="paintbrush" href="/settings/global">
-  Add flair to your docs with personalized branding.
-</Card>
-
-<Card
-  title="Add API Endpoints"
-  icon="square-code"
-  href="/api-playground/configuration"
->
-  Implement your OpenAPI spec and enable API user interaction.
-</Card>
-
-<Card
-  title="Integrate Analytics"
-  icon="chart-mixed"
-  href="/analytics/supported-integrations"
->
-  Draw insights from user interactions with your documentation.
-</Card>
-
-<Card
-  title="Host on a Custom Domain"
-  icon="browser"
-  href="/settings/custom-domain/subdomain"
->
-  Keep your docs on your own website's subdomain.
-</Card>
-
-</CardGroup>
+- [상세 사용 가이드](/usage)에서 SDK의 다양한 기능을 알아보세요.
+- [API 참조 문서](/api-reference)에서 전체 API 목록을 확인하세요.
