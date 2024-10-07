@@ -66,9 +66,7 @@
         {
       "group": "통합형 설치하기",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "통합형 설치",
       ]
     }
       ]
