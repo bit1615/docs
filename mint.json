@@ -31,23 +31,6 @@
       "url": "api-reference"
     }
   ],
-  "anchors": [
-    {
-      "name": "API 레퍼런스",
-      "icon": "rectangle-terminal",
-      "url": "api-reference"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
-    }
-  ],
   "navigation": [
     {
       "group": "Get Started",
@@ -86,17 +69,6 @@
     {
       "group": "지원",
       "pages": ["troubleshooting"]
-    },
-    {
-      "group": "Essentials",
-      "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
-      ]
     },
     {
       "group": "API Documentation",
