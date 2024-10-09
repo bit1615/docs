@@ -1,76 +1,151 @@
 ---
-title: 'API 참조 문서'
-description: '글로벌 오더 통합형 SDK의 전체 API 목록과 상세 설명'
+title: '통합형 JavaScript SDK'
+description: '딜리버드 코리아의 글로벌 오더 통합형 JavaScript SDK를 통해 해외 고객에게 원활한 주문 경험을 제공하세요'
 ---
 
-## 코어 API
+## 소개
 
-### dkLibrary.order(cartProducts)
+글로벌 오더의 통합형 JavaScript SDK는 브라우저 환경에서 글로벌 오더를 열 수 있는 메서드를 제공합니다. SDK 사용을 위한 준비와 메서드 사용법, 주문 실패 및 에러 처리 방법을 알아봅니다.
 
-글로벌 오더 프로세스를 시작합니다.
+## SDK 설치 및 초기화
 
-<ParamField path="cartProducts" type="CartProductRequest[]" required>
-  주문할 상품 정보를 담은 배열
-</ParamField>
+
+```html HTML
+<head>
+  <script src="https://sdk-checkout-staging.delivered.co.kr/index.js"></script>
+</head>
+<body>
+  <script>
+    const dkLibrary = DKCheckout();
+  </script>
+</body>
+```
+
+
+
+## 메서드
+
+글로벌 오더 통합형 SDK에서 제공하는 주요 메서드입니다.
+
+### order(cartProducts)
+
+글로벌 체크아웃을 호출하는 메서드입니다. `cartProducts` 파라미터에 주문 정보가 들어갑니다.
 
 ```javascript
+const cartProducts = [
+  {
+    productRequest: {
+      title: "프리미엄 티셔츠",
+      price: 29900,
+      originUrl: "https://example.com/products/premium-tshirt",
+      images: ["https://example.com/images/tshirt-front.jpg"],
+      options: [
+        { title: "색상: 흰색", price: 0 },
+        { title: "색상: 검정", price: 1000 }
+      ]
+    },
+    selectedOptions: [
+      { title: "색상: 흰색", quantity: 1 }
+    ]
+  }
+];
+
 dkLibrary.order(cartProducts);
 ```
 
-## 데이터 타입
-
-### CartProductRequest
+#### cartProducts
 
 <ResponseField name="productRequest" type="ProductRequest" required>
   상품 정보
+  <Expandable title="ProductRequest">
+    <ResponseField name="sellerId" type="number">
+      판매자 ID (선택사항)
+    </ResponseField>
+    <ResponseField name="title" type="string" required>
+      상품 제목
+    </ResponseField>
+    <ResponseField name="price" type="number" required>
+      상품 가격
+    </ResponseField>
+    <ResponseField name="originUrl" type="string" required>
+      상품 원본 URL
+    </ResponseField>
+    <ResponseField name="images" type="string[]" required>
+      상품 이미지 URL 배열
+    </ResponseField>
+    <ResponseField name="options" type="OptionRequest[]" required>
+      상품 옵션 배열
+    </ResponseField>
+  </Expandable>
 </ResponseField>
 
 <ResponseField name="selectedOptions" type="SelectedOptionRequest[]" required>
   선택된 옵션 정보
+  <Expandable title="SelectedOptionRequest">
+    <ResponseField name="title" type="string" required>
+      선택된 옵션 제목
+    </ResponseField>
+    <ResponseField name="quantity" type="number" required>
+      선택된 옵션 수량
+    </ResponseField>
+  </Expandable>
 </ResponseField>
 
-### ProductRequest
+## 주문 요청 응답 처리
 
-<ResponseField name="sellerId" type="number">
-  판매자 ID (선택사항)
+`order()` 메서드의 응답은 Promise로 처리할 수 있습니다.
+
+```javascript
+dkLibrary.order(cartProducts)
+  .then(function (data) {
+    // 성공 처리
+    console.log('주문 성공:', data);
+  })
+  .catch((error) => {
+    // 에러 처리
+    console.error('주문 실패:', error);
+  });
+```
+
+### 응답 데이터
+
+<ResponseField name="orderId" type="string">
+  주문을 식별하는 고유 ID
 </ResponseField>
 
-<ResponseField name="title" type="string" required>
-  상품 제목
+<ResponseField name="amount" type="number">
+  최종 결제 금액
 </ResponseField>
 
-<ResponseField name="price" type="number" required>
-  상품 가격
+<ResponseField name="currency" type="string">
+  결제 통화 (예: 'USD')
 </ResponseField>
 
-<ResponseField name="originUrl" type="string" required>
-  상품 원본 URL
-</ResponseField>
+## 주의 사항
 
-<ResponseField name="images" type="string[]" required>
-  상품 이미지 URL 배열
-</ResponseField>
+<AccordionGroup>
+  <Accordion title="상품 가격 계산">
+    상품의 최종 가격은 다음과 같이 계산됩니다:
+    - 상품 최종 가격 = 상품 가격 + 선택된 옵션의 가격
+  </Accordion>
 
-<ResponseField name="options" type="OptionRequest[]" required>
-  상품 옵션 배열
-</ResponseField>
+  <Accordion title="옵션 타이틀 일치">
+    `SelectedOptionRequest`의 `title`은 반드시 `ProductRequest`의 `options` 중 동일한 `title`이 존재해야 합니다.
+  </Accordion>
 
-### OptionRequest
+  <Accordion title="옵션이 없는 상품 처리">
+    상품에 옵션이 없는 경우에도 `ProductRequest`의 `options` 배열의 길이는 반드시 1 이상이어야 합니다. 빈 옵션을 추가하고, `selectedOptions`에도 수량을 포함하여 전달해야 합니다.
+  </Accordion>
+</AccordionGroup>
 
-<ResponseField name="title" type="string" required>
-  옵션 제목
-</ResponseField>
+## 에러 처리
 
-<ResponseField name="price" type="number" required>
-  옵션 가격
-</ResponseField>
+주문 요청 시 발생할 수 있는 주요 에러 코드와 대응 방법입니다.
 
-### SelectedOptionRequest
+| 코드 | 설명 | 대응 방법 |
+|------|------|----------|
+| INVALID_PRODUCT_INFO | 유효하지 않은 상품 정보 | 상품 정보를 확인하고 올바른 형식으로 다시 요청하세요. |
+| NETWORK_ERROR | 네트워크 오류 | 네트워크 연결을 확인하고 다시 시도하세요. |
+| USER_CANCEL | 사용자가 주문을 취소함 | 사용자에게 주문이 취소되었음을 알리세요. |
 
-<ResponseField name="title" type="string" required>
-  선택된 옵션 제목
-</ResponseField>
-
-<ResponseField name="quantity" type="number" required>
-  선택된 옵션 수량
-</ResponseField>
+더 자세한 내용은 [에러 코드 문서](/error-codes)를 참조하세요.
